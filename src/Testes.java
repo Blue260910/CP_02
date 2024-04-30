@@ -134,4 +134,19 @@ public class Testes {
         assertEquals(2022, carro.getAno());
     }
 
+    @Test
+    public void testVelocidadeMaxima() {
+        Carro carro = new Carro("Fiat", "Palio", 2020);
+        carro.setVelocidadeMaxima(200);
+        carro.acelerar(210);
+    }
+
+    @Test
+    public void testVelocidadeNegativa() {
+        Carro carro = new Carro("Fiat", "Palio", 2020);
+        carro.acelerar(10);
+        carro.reduzirVelocidade(20);
+        assertEquals(0, carro.getVelocidadeAtual());
+    }
+
 }

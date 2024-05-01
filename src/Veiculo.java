@@ -4,6 +4,7 @@ public class Veiculo {
     private int ano;
     private int velocidadeMaxima;
     private int velocidadeAtual;
+    private boolean ligado;
 
     public Veiculo(String marca, String modelo, int ano) {
         this.marca = marca;
@@ -11,6 +12,7 @@ public class Veiculo {
         this.ano = ano;
         this.velocidadeMaxima = 0; // Velocidade máxima padrão
         this.velocidadeAtual = 0; // Começa com velocidade zero
+        this.ligado = false; // Começa desligado
     }
 
     // Getters e setters
@@ -50,8 +52,38 @@ public class Veiculo {
         return velocidadeAtual;
     }
 
+    public void ligarVeiculo() {
+        if (ligado) {
+            System.out.println("Veículo já está ligado.");
+        }
+        this.ligado = true;
+    }
+
+    public void desligarVeiculo() {
+        if (!ligado) {
+            System.out.println("Veículo já está desligado.");
+        }
+        this.ligado = false;
+    }
+
+    public boolean getPower() {
+        if (ligado) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // Métodos de funcionalidade
     public void acelerar(int incremento) {
+        if (!ligado) {
+            System.out.println("Veículo desligado.");
+            return;
+        }
+        if (incremento < 0) {
+            System.out.println("Aceleração não pode ser negativa.");
+            return;
+        }
         if (velocidadeAtual + incremento <= velocidadeMaxima) {
             velocidadeAtual += incremento;
         } else {
@@ -60,6 +92,14 @@ public class Veiculo {
     }
 
     public void reduzirVelocidade(int decremento) {
+        if (!ligado) {
+            System.out.println("Veículo desligado.");
+            return;
+        }
+        if (decremento < 0) {
+            System.out.println("Decremento não pode ser negativa.");
+            return;
+        }
         if (velocidadeAtual - decremento >= 0) {
             velocidadeAtual -= decremento;
         } else {
@@ -73,6 +113,7 @@ public class Veiculo {
         System.out.println("Ano: " + ano);
         System.out.println("Velocidade Máxima: " + velocidadeMaxima + " km/h");
         System.out.println("Velocidade Atual: " + velocidadeAtual + " km/h");
+        System.out.println("Veículo " + (ligado ? "ligado" : "desligado"));
 
     }
 }

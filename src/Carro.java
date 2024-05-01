@@ -8,7 +8,7 @@ public class Carro extends Veiculo {
     }
 
     public boolean ligarArCondicionado() {
-        if (getVelocidadeAtual() > 0) {
+        if (getPower()) {
             arCondicionado = true;
             System.out.println("Ar condicionado ligado.");
             return true;

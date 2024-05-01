@@ -20,6 +20,17 @@ public class Moto extends Veiculo {
         }
     }
 
+    public boolean desempinar() {
+        if (empinando) {
+            System.out.println("Moto desempinando!");
+            empinando = false;
+            return true;
+        } else {
+            System.out.println("Moto não está empinando.");
+            return false;
+        }
+    }
+
     @Override
     public void obterStatus() {
     super.obterStatus();

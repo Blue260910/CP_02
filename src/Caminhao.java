@@ -14,8 +14,8 @@ public class Caminhao extends Veiculo {
     }
 
     public void setCarga(double carga) {
-        if (carga > cargaMaxima) {
-            System.out.println("Carga excede o limite do caminhão.");
+        if ((carga > cargaMaxima) || (carga < 0)){
+            System.out.println("Carga nâo permitida");
         } else {
             this.carga = carga;
         }

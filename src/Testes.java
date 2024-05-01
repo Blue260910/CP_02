@@ -1,11 +1,9 @@
-
-
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Testes {
-// -------------------------------------------------- T E S T E S   C A R R O S -------------------------------------------------- //
+
+    // -------------------------------------------------- T E S T E S   C A R R O S -------------------------------------------------- //
     @Test
     public void test_LigarArCondicionadoCarroOff() {
         Carro carro = new Carro("Fiat", "Palio", 2020);
@@ -17,7 +15,7 @@ public class Testes {
     @Test
     public void test_LigarArCondicionadoCarroOn() {
         Carro carro = new Carro("Fiat", "Palio", 2020);
-        carro.acelerar(50);
+        carro.ligarVeiculo();
         carro.ligarArCondicionado();
         carro.obterStatus();
         assertTrue(carro.ligarArCondicionado());
@@ -33,15 +31,123 @@ public class Testes {
         assertTrue(carro.desligarArCondicionado());
     }
 
-// -------------------------------------------------- T E S T E S   M O T O S -------------------------------------------------- //
+    @Test
+    public void test_Veiculo() {
+        Carro carro = new Carro("Fiat", "Palio", 2020);
+        carro.ligarVeiculo();
+        carro.acelerar(50);
+        carro.obterStatus();
+        carro.reduzirVelocidade(20);
+        assertEquals(30, carro.getVelocidadeAtual());
+    }
 
+    @Test
+    public void test_VeiculoAcelerarNegativo() {
+        Carro carro = new Carro("Fiat", "Palio", 2020);
+        carro.ligarVeiculo();
+        carro.acelerar(50);
+        carro.obterStatus();
+        carro.acelerar(-50);
+        assertEquals(50, carro.getVelocidadeAtual());
+    }
+
+    @Test
+    public void test_VeiculoDesacelerarNegativo() {
+        Carro carro = new Carro("Fiat", "Palio", 2020);
+        carro.ligarVeiculo();
+        carro.acelerar(60);
+        carro.reduzirVelocidade(50);
+        carro.obterStatus();
+        carro.reduzirVelocidade(-50);
+        assertEquals(10, carro.getVelocidadeAtual());
+    }
+
+    @Test
+    public void test_VeiculoDesacelerarMaiorQueVelocidade() {
+        Carro carro = new Carro("Fiat", "Palio", 2020);
+        carro.ligarVeiculo();
+        carro.acelerar(60);
+        carro.reduzirVelocidade(70);
+        assertEquals(0, carro.getVelocidadeAtual());
+    }
+
+    @Test
+    public void test_GettersAndSetters() {
+        Carro carro = new Carro("Fiat", "Palio", 2020);
+        carro.setMarca("Marca");
+        assertEquals("Marca", carro.getMarca());
+        carro.setModelo("Modelo");
+        assertEquals("Modelo", carro.getModelo());
+        carro.setAno(2022);
+        assertEquals(2022, carro.getAno());
+    }
+
+    @Test
+    public void test_VelocidadeMaxima() {
+        Carro carro = new Carro("Fiat", "Palio", 2020);
+        carro.ligarVeiculo();
+        carro.setVelocidadeMaxima(200);
+        carro.acelerar(210);
+    }
+
+    @Test
+    public void test_VelocidadeNegativa() {
+        Carro carro = new Carro("Fiat", "Palio", 2020);
+        carro.acelerar(10);
+        carro.reduzirVelocidade(20);
+        assertEquals(0, carro.getVelocidadeAtual());
+    }
+
+    @Test
+    public void test_LigarFalha() {
+        Carro carro = new Carro("Fiat", "Palio", 2020);
+        carro.ligarVeiculo();
+        carro.ligarVeiculo();
+        assertTrue(carro.getPower());
+    }
+
+    @Test
+    public void test_DesligarFalha() {
+        Carro carro = new Carro("Fiat", "Palio", 2020);
+        carro.desligarVeiculo();
+        assertFalse(carro.getPower());
+    }
+
+    @Test
+    public void test_DesligarVeiculo() {
+        Carro carro = new Carro("Fiat", "Palio", 2020);
+        carro.ligarVeiculo();
+        carro.desligarVeiculo();
+        assertFalse(carro.getPower());
+    }
+
+    // -------------------------------------------------- T E S T E S   M O T O S -------------------------------------------------- //
     @Test
     public void test_EmpinarMoto() {
         Moto moto = new Moto("Honda", "CG 125", 2019);
+        moto.ligarVeiculo();
         moto.acelerar(30);
         moto.empinar();
         moto.obterStatus();
         assertTrue(moto.empinar());
+    }
+
+    @Test
+    public void test_DesempinarMoto() {
+        Moto moto = new Moto("Honda", "CG 125", 2019);
+        moto.ligarVeiculo();
+        moto.acelerar(30);
+        moto.empinar();
+        moto.obterStatus();
+        assertTrue(moto.desempinar());
+    }
+
+    @Test
+    public void test_DesempinarMotoFalha() {
+        Moto moto = new Moto("Honda", "CG 125", 2019);
+        moto.acelerar(30);
+        moto.obterStatus();
+        assertFalse(moto.desempinar());
     }
 
     @Test
@@ -62,21 +168,20 @@ public class Testes {
         assertFalse(moto.empinar());
     }
 
-
     @Test
     public void test_AcelerarMoto() {
         Moto moto = new Moto("Honda", "CG 125", 2019);
+        moto.ligarVeiculo();
         moto.acelerar(30);
         moto.obterStatus();
         assertEquals(30, moto.getVelocidadeAtual());
     }
 
-
-// -------------------------------------------------- T E S T E S   C A M I N H A O -------------------------------------------------- //
-
+    // -------------------------------------------------- T E S T E S   C A M I N H A O -------------------------------------------------- //
     @Test
     public void test_AcelerarCaminhao() {
         Caminhao caminhao = new Caminhao("Volvo", "FH 460", 2022);
+        caminhao.ligarVeiculo();
         caminhao.obterStatus();
         caminhao.acelerar(80);
         assertEquals(80, caminhao.getVelocidadeAtual());
@@ -101,52 +206,18 @@ public class Testes {
     }
 
     @Test
-    public void test_CaminhaoCargaFalha() {
+    public void test_CaminhaoCargaFalhaMaior() {
         Caminhao caminhao = new Caminhao("Volvo", "FH 460", 2022);
         caminhao.setCarga(1500);
         caminhao.obterStatus();
         assertEquals(0, caminhao.getCarga());
     }
-    
-    // -------------------------------------------------- T E S T E S   V E I C U L O S  -------------------------------------------------- //
 
     @Test
-    public void test_Veiculo() {
-        Carro carro = new Carro("Fiat", "Palio", 2020);
-        carro.acelerar(50);
-        carro.obterStatus();
-
-        carro.reduzirVelocidade(20);
-        assertEquals(30, carro.getVelocidadeAtual());
+    public void test_CaminhaoCargaFalhaMenor() {
+        Caminhao caminhao = new Caminhao("Volvo", "FH 460", 2022);
+        caminhao.setCarga(-1);
+        caminhao.obterStatus();
+        assertEquals(0, caminhao.getCarga());
     }
-
-    @Test
-    public void testGettersAndSetters() {
-        Carro carro = new Carro("Fiat", "Palio", 2020);
-
-        carro.setMarca("Marca");
-        assertEquals("Marca", carro.getMarca());
-
-        carro.setModelo("Modelo");
-        assertEquals("Modelo", carro.getModelo());
-
-        carro.setAno(2022);
-        assertEquals(2022, carro.getAno());
-    }
-
-    @Test
-    public void testVelocidadeMaxima() {
-        Carro carro = new Carro("Fiat", "Palio", 2020);
-        carro.setVelocidadeMaxima(200);
-        carro.acelerar(210);
-    }
-
-    @Test
-    public void testVelocidadeNegativa() {
-        Carro carro = new Carro("Fiat", "Palio", 2020);
-        carro.acelerar(10);
-        carro.reduzirVelocidade(20);
-        assertEquals(0, carro.getVelocidadeAtual());
-    }
-
 }

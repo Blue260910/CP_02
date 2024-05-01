@@ -143,9 +143,10 @@ public class Testes {
     }
 
     @Test
-    public void test_DesempinarMotoFalha() {
+    public void test_DesempinarMotoFalhaMin() {
         Moto moto = new Moto("Honda", "CG 125", 2019);
-        moto.acelerar(30);
+        moto.ligarVeiculo();
+        moto.acelerar(10);
         moto.obterStatus();
         assertFalse(moto.desempinar());
     }
@@ -153,6 +154,7 @@ public class Testes {
     @Test
     public void test_EmpinarMotoFalhaMenor() {
         Moto moto = new Moto("Honda", "CG 125", 2019);
+        moto.ligarVeiculo();
         moto.acelerar(10);
         moto.empinar();
         moto.obterStatus();
@@ -162,6 +164,7 @@ public class Testes {
     @Test
     public void test_EmpinarMotoFalhaMaior() {
         Moto moto = new Moto("Honda", "CG 125", 2019);
+        moto.ligarVeiculo();
         moto.acelerar(100);
         moto.empinar();
         moto.obterStatus();
